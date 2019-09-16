@@ -1,3 +1,5 @@
+from os.path import dirname
+from os import makedirs
 import argparse
 import pandas as pd
 
@@ -72,8 +74,6 @@ if __name__ == '__main__':
     df.filename = df.filename.map(lambda fn: fn + '.jpg')
     df = df.set_index('filename')
 
+    # save it
+    makedirs(dirname(_DESTINATION), exist_ok=True)
     df.to_csv(_DESTINATION)
-
-
-    
-
