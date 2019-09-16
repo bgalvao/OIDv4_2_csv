@@ -5,7 +5,7 @@ to the csv format necessary to convert to TFRecords. Made with
 in mind.
 
 
-```
+```console
 (base) bgalvao@rocket:~/repos/tools/OID2csv_voc$ python main.py --help
 usage: main.py [-h] [--imgs_source IMGS_SOURCE]
                [--output_csv_filename OUTPUT_CSV_FILENAME]
@@ -32,4 +32,16 @@ optional arguments:
                         recommend to make your own smaller annotations file of
                         classes of interest.
 
+```
+
+## example usage
+
+Example snippet in [`process.bash`](./process.bash). After downloading data using [OIDv4_Toolkit](https://github.com/EscVM/OIDv4_ToolKit), generate the csv files by running something like:
+
+```bash
+python main.py \
+--imgs_source ../OIDv4_ToolKit/OID/Dataset/train/ \
+--output_csv_filename ../OIDv4_ToolKit/OID/csv_folder/train.csv \
+--annotations_file_path ../OIDv4_ToolKit/OID/csv_folder/train-annotations-bbox.csv \
+--labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv
 ```
