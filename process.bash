@@ -17,22 +17,25 @@
 echo "processing train subset"
 python main.py \
 --imgs_source ../OIDv4_ToolKit/OID/Dataset/train/ \
---output_csv_filename ../OIDv4_ToolKit/OID/csv_folder/train.csv \
+--output_csv_filename ./train.csv \
 --annotations_file_path ../OIDv4_ToolKit/OID/csv_folder/train-annotations-bbox.csv \
---labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv
+--labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv \
+--target_classes Dolphin Whale
 
 # test
 echo "processing test subset"
 python main.py \
 --imgs_source ../OIDv4_ToolKit/OID/Dataset/test/ \
---output_csv_filename ../OIDv4_ToolKit/OID/csv_folder/test.csv \
+--output_csv_filename ./test.csv \
 --annotations_file_path ../OIDv4_ToolKit/OID/csv_folder/test-annotations-bbox.csv \
---labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv
+--labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv \
+--target_classes Dolphin Whale
 
 # validation
 echo "processing validation subset"
 python main.py \
 --imgs_source ../OIDv4_ToolKit/OID/Dataset/validation/ \
---output_csv_filename ../OIDv4_ToolKit/OID/csv_folder/validation.csv \
+--output_csv_filename ./validation.csv \
 --annotations_file_path ../OIDv4_ToolKit/OID/csv_folder/validation-annotations-bbox.csv \
---labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv
+--labels_file_path ../OIDv4_ToolKit/OID/csv_folder/class-descriptions-boxable.csv \
+--target_classes Dolphin Whale

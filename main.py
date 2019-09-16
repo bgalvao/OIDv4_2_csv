@@ -34,8 +34,14 @@ parser.add_argument(
 parser.add_argument(
     '--labels_file_path', '-l',
     default='../csv_folder/class-descriptions-boxable.csv',
-    help='Path to csv annotations file provided by OID. Do recommend ' + \
-        'to make your own smaller annotations file of classes of interest.'
+    help='Path to csv annotations file provided by OID.'
+)
+
+parser.add_argument(
+    '--target_classes', '-t',
+    nargs='+',
+    help='List of the target classes to filter desired detection boxes.',
+    required=True
 )
 
 args = parser.parse_args()
@@ -44,6 +50,7 @@ _SOURCE = args.imgs_source
 _DESTINATION = args.output_csv_filename
 _ANNOTATIONS_PATH = args.annotations_file_path
 _LABELS_PATH = args.labels_file_path
+_TARGET_CLASSES = args.target_classes
 
 if __name__ == '__main__':
 
@@ -53,12 +60,18 @@ if __name__ == '__main__':
     annotations = pd.read_csv(_ANNOTATIONS_PATH)
     labels = pd.read_csv(_LABELS_PATH, header=None)
     labels.columns = ['LabelName', 'class']
-    ann = annotations.set_index('LabelName').join(labels.set_index('LabelName'))         
-    df = df.join(ann.set_index('ImageID')).drop(
+    labels = pd.concat([labels[labels['class'] == c] for c in _TARGET_CLASSES])
+
+    annotations = annotations.set_index('LabelName').join(
+        labels.set_index('LabelName'),
+        how='right'
+    )
+
+    df = df.join(annotations.set_index('ImageID')).drop(
         ['Source', 'Confidence'],
         axis=1
     )
-    del annotations, ann, labels
+    del annotations, labels
 
     df['xmin'] = (df.XMin * df.width).round(0).astype(int)
     df['xmax'] = (df.XMax * df.width).round(0).astype(int)
